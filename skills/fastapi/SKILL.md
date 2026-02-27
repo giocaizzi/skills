@@ -1,8 +1,7 @@
 ---
 name: fastapi
 description: FastAPI best practices and conventions with Pydantic v2. Use this anytime you are working with FastAPI. Follow these guidelines always.
-metadata:
-  version: "2.0"
+metadata: {"version": "2.0"}
   updated: "2025-01"
 ---
 

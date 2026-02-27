@@ -1,8 +1,7 @@
 ---
 name: ddd
 description: Domain Driven Design (DDD) - Concepts, Patterns, and Best Practices. Use this anytime you are designing or working within a DDD architecture. You must follow these guidelines always.
-metadata:
-  version: "1.0"
+metadata: {"version": "1.0"}
 ---
 
 # Domain-Driven Design (DDD) Best Practices

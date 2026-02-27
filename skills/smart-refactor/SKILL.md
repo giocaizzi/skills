@@ -1,7 +1,6 @@
 ---
-agent: 'agent'
+name: smart-refactor
 description: 'Smartly refactor files and strings of code. Use when you need to do complex refactoring across multiple files or large codebases.'
-tools: ['vscode', 'execute', 'read', 'edit', 'search', 'web', 'agent', 'ms-python.python/getPythonEnvironmentInfo', 'ms-python.python/getPythonExecutableCommand', 'ms-python.python/installPythonPackage', 'ms-python.python/configurePythonEnvironment', 'todo']
 ---
 
 You have to refactor a huge codebase, with changes across filenames and code.

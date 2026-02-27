@@ -1,8 +1,7 @@
 ---
 name: python-testing
 description: python testing best practices and conventions. Use this skill whenever you are testing Python code. You must follow these guidelines always.
-metadata:
-  version: "1.0"
+metadata: {"version": "1.0"}
 ---
 
 # Python Testing

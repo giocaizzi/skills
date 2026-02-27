@@ -1,8 +1,7 @@
 ---
 name: sqlalchemy
 description: SQLAlchemy v2 best practices and conventions. Use this anytime you are using SQLAlchemy. You must follow these guidelines always.
-metadata:
-  version: "2.0"
+metadata: {"version": "2.0"}
 ---
 
 # SQLAlchemy v2 Best Practices
