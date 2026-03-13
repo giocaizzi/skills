@@ -2,6 +2,10 @@
 
 This is my personal set of skills for AI Agents. 
 
+## Specification
+
+Read the specification https://agentskills.io/home
+
 ## Usage
 
 ```bash
