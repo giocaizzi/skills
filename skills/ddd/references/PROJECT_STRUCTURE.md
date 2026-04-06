@@ -83,9 +83,12 @@ project_root/
 │     │  │  # AVOID: Business logic, direct DB access, domain knowledge.
 │     │  │
 │     │  ├─ dependencies/
-│     │  │  # Dependency injection providers (e.g., FastAPI Depends).
+│     │  │  # COMPOSITION ROOT: The only place that knows about concrete implementations.
 │     │  │  # PUT HERE: Factory functions for UoW, repositories, ports, handlers.
-│     │  │  # PURPOSE: Wire concrete implementations at runtime.
+│     │  │  # PURPOSE: Wire concrete implementations (infrastructure) to abstract interfaces
+│     │  │  #          (domain/application Protocols). Return abstract types.
+│     │  │  # DIP: This is the only folder outside infrastructure allowed to import from it.
+│     │  │  # DI: Uses constructor injection or FastAPI Depends() for parameter injection.
 │     │  │
 │     │  ├─ schemas/
 │     │  │  # Pydantic models for HTTP serialization/deserialization.

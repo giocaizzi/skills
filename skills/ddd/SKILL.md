@@ -44,6 +44,44 @@ metadata:
 - **Driving (Primary) Adapters:** HTTP controllers, CLI, message consumers — translate external input into port calls.
 - **Driven (Secondary) Adapters:** PostgreSQL repository, SMTP email sender, Stripe client — implement driven port interfaces.
 
+## Dependency Inversion Principle (DIP)
+
+DIP (Robert C. Martin, 1996) is the **architectural principle** that makes hexagonal architecture enforceable. It is NOT Dependency Injection.
+
+**Part A:** High-level modules must not depend on low-level modules. Both must depend on abstractions.
+**Part B:** Abstractions must not depend on details. Details must depend on abstractions.
+
+The word "inversion" means: in traditional layered design, domain imports infrastructure. DIP **inverts** this — infrastructure imports and implements domain-defined abstractions. The domain has zero knowledge of infrastructure.
+
+**Ownership is the key:** The abstraction (Protocol) lives in the domain's package, defined in domain terms (`OrderRepository.add(order)`), not infrastructure terms (`DatabaseDriver.execute(sql)`). The infrastructure module depends on the domain's contract — never the reverse.
+
+- Use `typing.Protocol` for DIP boundaries (structural subtyping, Pythonic, mypy-compatible).
+- Apply DIP at **layer boundaries** (domain ↔ application ↔ infrastructure), not within a single module.
+
+## Dependency Injection (DI) & Composition Root
+
+DI (Martin Fowler, 2004) is a **technique** for providing dependencies from the outside. DIP decides the direction; DI decides the delivery.
+
+| DI Type | Description | Use When |
+|---------|-------------|----------|
+| **Constructor injection** | Dependencies via `__init__` | Default for all services/handlers |
+| **Parameter injection** | Dependencies per-call (FastAPI `Depends()`) | API layer, request-scoped deps |
+| **Closures/partials** | `functools.partial` to bake in deps | Message bus handlers (Cosmic Python) |
+
+**Composition Root** (Mark Seemann): The single location where the entire object graph is assembled. It is the **only place** allowed to know about all concrete implementations. In a DDD + FastAPI project, this is `api/dependencies/` — it imports from infrastructure and returns abstractions.
+
+```
+api/dependencies/     → COMPOSITION ROOT (imports concrete, returns abstract)
+application/          → receives abstractions via constructor injection
+domain/               → defines abstractions (Protocols), imports nothing
+infrastructure/       → implements abstractions, imported only by composition root
+```
+
+**DI Anti-patterns — avoid these:**
+- **Control Freak:** Class creates its own dependencies (`self._repo = PostgresRepo()`). Violates IoC.
+- **Service Locator:** Global registry classes pull from (`ServiceLocator.get(Repo)`). Hides dependencies.
+- **Bastard Injection:** Constructor defaults to concrete (`repo=None; self._repo = repo or PostgresRepo()`).
+
 ## Aggregate Design Rules (Vernon)
 
 1. **Model true invariants** in consistency boundaries.
@@ -180,3 +218,7 @@ Use Python Protocols for port interfaces — no `I` prefix (use `EmailSender`, n
 ## Project Structure
 
 See [references/PROJECT_STRUCTURE.md](references/PROJECT_STRUCTURE.md) for the full annotated folder structure with component placement rules.
+
+## Additional References
+
+- [references/DI_AND_DIP.md](references/DI_AND_DIP.md) — Deep dive on Dependency Inversion Principle, Dependency Injection, Composition Root, anti-patterns, and the full dependency flow.
